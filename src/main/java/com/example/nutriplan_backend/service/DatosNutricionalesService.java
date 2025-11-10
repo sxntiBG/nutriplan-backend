@@ -23,8 +23,9 @@ public class DatosNutricionalesService {
     }
 
     // GET BY ID
-    public Optional<DatosNutricionales> obtenerRegistrosPorUsuario(Long id){
-        return datosNutricionalesRepository.findById(id);
+    public DatosNutricionales obtenerRegistrosPorUsuario(Long id){
+        return datosNutricionalesRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }
 
     // PUT
