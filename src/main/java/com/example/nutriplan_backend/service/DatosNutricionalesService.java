@@ -12,13 +12,21 @@ import java.util.Optional;
 public class DatosNutricionalesService {
     @Autowired
     private DatosNutricionalesRepository datosNutricionalesRepository;
+    private ActividadFisicaRepository actividadFisicaRepository;
 
     // POST
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
 
         //Se invoca el metodo para calcular la tmb
         double tmbCalculada = calcularTMB(datosNutricionales);
+        //Reasigna el valor de tmb en la tabla, despues de realizar los calculos.
         datosNutricionales.setTmb(tmbCalculada);
+
+        //Obtiene el id de la actividad fisica.
+        long idActividad = datosNutricionales.getActividad().getId();
+        //Invoca el metodo para calcular el requerimiento calorico.
+        //Pasa como parametros la tmb y el id de la actividad fisica.
+        double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, datosNutricionales.actividad);
 
 
         return datosNutricionalesRepository.save(datosNutricionales);
@@ -80,5 +88,17 @@ public class DatosNutricionalesService {
         default:
            return 0;
     }
+}
+
+//Busca el id de actividad fisica seleccionado
+//Si no lo encuentra devuelve error
+//Si existe, obtiene el factor asociado al id y realiza el calculo
+public double calcularRequerimientoKcal(double tmb, Long idActividad){
+
+     ActividadFisica actividad = actividadFisicaRepository.findById(idActividad)
+        .orElseThrow(() -> new ResourceNotFoundException("Actividad no encontrada"));
+
+
+    return tmb * actividadFisica.getFactor();
 }
 }
