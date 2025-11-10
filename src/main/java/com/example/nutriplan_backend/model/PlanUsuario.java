@@ -1,41 +1,42 @@
 package com.example.nutriplan_backend.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
-
+import lombok.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
 
 @Entity
-@Data
+@Table(name = "plan_usuario")
+@Getter
+@Setter
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class PlanUsuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name = "id_plan_usuario")
     private Long id;
-    private double calorias;
-    private double carbohidratos;
-    private double proteinas;
-    private double grasas;
-    private LocalDateTime fecha_creacion;
 
-    // Relación Many to One
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_usuario")
-    @JoinColumn(name="id_objetivo")
-
-    @JsonBackReference
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    
-    // @JsonBackReference
-    // private Objetivo objetivo;
-    
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_objetivo")
+    private Objetivo objetivo;
+
+    @Column(name = "calorias_totales")
+    private Double caloriasTotales;
+
+    @Column(name = "carbohidratos_g")
+    private Double carbohidratosG;
+
+    @Column(name = "proteinas_g")
+    private Double proteinasG;
+
+    @Column(name = "grasas_g")
+    private Double grasasG;
+
+    @Column(name = "fecha_creacion")
+    private LocalDateTime fechaCreacion;
 }

@@ -1,6 +1,9 @@
 package com.example.nutriplan_backend.repository;
 
 import com.example.nutriplan_backend.model.PlanUsuario;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +11,5 @@ import org.springframework.stereotype.Repository;
 
 // Interface para acceso a los métodos de JPA porque vamos a crear el CRUD
 public interface PlanUsuarioRepository extends JpaRepository<PlanUsuario, Long> {
-    
+    List<PlanUsuario> findByUsuarioId(Long usuarioId);
 }
