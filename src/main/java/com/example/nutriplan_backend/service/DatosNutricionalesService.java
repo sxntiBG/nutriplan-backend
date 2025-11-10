@@ -1,5 +1,6 @@
 package com.example.nutriplan_backend.service;
 import com.example.nutriplan_backend.model.DatosNutricionales;
+import com.example.nutriplan_backend.model.enums.Genero;
 import com.example.nutriplan_backend.repository.DatosNutricionalesRepository;
 import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@ public class DatosNutricionalesService {
 
     // POST
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
+
+        //Se invoca el metodo para calcular la tmb
+        double tmbCalculada = calcularTMB(datosNutricionales);
+        datosNutricionales.setTmb(tmbCalculada);
+
+
         return datosNutricionalesRepository.save(datosNutricionales);
     }
 
@@ -55,4 +62,23 @@ public class DatosNutricionalesService {
 
         datosNutricionalesRepository.deleteById(id);
     }
+
+
+
+    //Calcular la TMB 
+    public double calcularTMB(DatosNutricionales dn){
+        //Depende del genero se utiliza una formula diferente.
+        switch (dn.getGenero()) {
+        case M:
+        //Formula para el genero masculino
+            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaM()) - (5 * dn.getEdad()) + 5;
+
+        case F:
+        //Formula para el genero femenino
+            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaM()) - (5 * dn.getEdad()) - 161;
+
+        default:
+           return 0;
+    }
+}
 }
