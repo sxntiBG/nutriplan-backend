@@ -13,7 +13,7 @@ import com.example.nutriplan_backend.model.enums.Genero;
 @Data // Genera getters, setters, toString, equals y hashCode automáticamente con Lombok
 @NoArgsConstructor // Genera un constructor vacío
 @Table(name = "datos_nutricionales_usuario") // Mapea a la tabla específica
-public class DatosNutricionalesUsuario {
+public class DatosNutricionales {
     @Id //Llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
     @Column(name="id_dato") //Nombre exacto de la columna en la BD
