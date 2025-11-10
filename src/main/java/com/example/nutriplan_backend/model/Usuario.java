@@ -24,6 +24,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true) // orphamRemoval para eliminar en cascada
 
     @JsonManagedReference
-    private List<DatosNutricionales> datosNutricionales = new ArrayList<>(); // Al ser relación de uno a muchos por eso es una lista
+    private List<DatosNutricionalesUsuario> datosNutricionales = new ArrayList<>(); // Al ser relación de uno a muchos por eso es una lista
     private List<PlanUsuario> planUsuario = new ArrayList<>();
 }
