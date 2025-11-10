@@ -44,7 +44,7 @@ public class DatosNutricionalesController {
 
     //DELETE: Eliminar un registro 
     @DeleteMapping("/{id}")
-    public DatosNutricionales removerRegistro(@PathVariable Long id){
+    public ResponseEntity<Void> removerRegistro(@PathVariable Long id){
         datosNutricionalesService.eliminarRegistro(id);
         return ResponseEntity.noContent().build(); 
     }
