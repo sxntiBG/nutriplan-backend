@@ -26,8 +26,14 @@ public class DatosNutricionalesService {
         long idActividad = datosNutricionales.getActividad().getId();
         //Invoca el metodo para calcular el requerimiento calorico.
         //Pasa como parametros la tmb y el id de la actividad fisica.
-        double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, datosNutricionales.actividad);
+        double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, idActividad);
+        //Reasigna el valor de la columna requerimiento_calorico en la tabla, despues de realizar los calculos.
+        datosNutricionales.setRequerimientoCalorico(rqtoKcalCalculado);
 
+        //Invoca el metodo para calcular el IMC
+        double imcCalculado = calcularIMC(datosNutricionales);
+        //Reasigna el valor de la columna imc en la tabla, despues de realizar los calculos.
+        datosNutricionales.setImc(imcCalculado);
 
         return datosNutricionalesRepository.save(datosNutricionales);
     }
@@ -73,7 +79,7 @@ public class DatosNutricionalesService {
 
 
 
-    //Calcular la TMB 
+    //Metodo para calcular la TMB 
     public double calcularTMB(DatosNutricionales dn){
         //Depende del genero se utiliza una formula diferente.
         switch (dn.getGenero()) {
@@ -90,6 +96,7 @@ public class DatosNutricionalesService {
     }
 }
 
+//Metodo para calcular el requerimiento calorico.
 //Busca el id de actividad fisica seleccionado
 //Si no lo encuentra devuelve error
 //Si existe, obtiene el factor asociado al id y realiza el calculo
@@ -101,4 +108,10 @@ public double calcularRequerimientoKcal(double tmb, Long idActividad){
 
     return tmb * actividadFisica.getFactor();
 }
+
+//Metodo para calcular el IMC
+public double calcularIMC(DatosNutricionales dn){
+    return dn.getPesoKg() / (dn.getEstaturaM() * dn.getEstaturaM());
+}
+
 }
