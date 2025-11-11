@@ -3,8 +3,8 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ActividadFisica {
     private Double factor;
 
     // Relación One-To-Many con DatosNutricionales
-    @OneToMany(mappedBy = "actividad")
+    @OneToMany(mappedBy = "actividad", cascade=CascadeType.ALL, orphanRemoval=true)
     @JsonManagedReference
     private List<DatosNutricionales> datosNutricionales = new ArrayList<>();
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/actividad-fisica")
+@RequestMapping("/api/actividad-fisica")
 public class ActividadFisicaController {
     @Autowired
     private ActividadFisicaService actividadFisicaService;
