@@ -3,10 +3,7 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import com.example.nutriplan_backend.model.enums.Genero;
 
 @Entity // Marca la clase como una entidad JPA (mapeada a una tabla)
