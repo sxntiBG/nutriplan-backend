@@ -2,6 +2,7 @@ package com.example.nutriplan_backend.service;
 import com.example.nutriplan_backend.model.DatosNutricionales;
 import com.example.nutriplan_backend.model.enums.Genero;
 import com.example.nutriplan_backend.repository.DatosNutricionalesRepository;
+import com.example.nutriplan_backend.repository.ActividadFisicaRepository;
 import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

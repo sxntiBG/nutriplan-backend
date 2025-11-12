@@ -272,6 +272,7 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
+  `activo` BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo` (`correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

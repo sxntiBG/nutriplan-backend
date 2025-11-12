@@ -3,6 +3,8 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
@@ -34,6 +36,6 @@ public class Objetivo {
     private double grasas;
 
     @OneToMany(mappedBy = "objetivo")
-    @JsonManagedReference
+    @JsonBackReference("objetivo-planes")
     private List<PlanUsuario> planesUsuario = new ArrayList<>();
 }
