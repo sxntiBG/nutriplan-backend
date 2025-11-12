@@ -33,8 +33,8 @@ public class Objetivo {
     @Column(name = "grasas_ptc")
     private double grasas;
 
-    // Relación One-To-Many con PlanUsuario
-    //@OneToMany(mappedBy = "objetivo", cascade = CascadeType.ALL, orphanRemoval = true)
-   // @JsonManagedReference
-    //private List<PlanUsuario> planUsuario = new ArrayList<>();*/
+    //Relación One-To-Many con PlanUsuario
+    @OneToMany(mappedBy = "objetivo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<PlanUsuario> planUsuario = new ArrayList<>();*/
 }
