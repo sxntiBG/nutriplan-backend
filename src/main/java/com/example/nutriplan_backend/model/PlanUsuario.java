@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "plan_usuario")
 @Getter
@@ -18,10 +20,12 @@ public class PlanUsuario {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("usuario-planes")
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("objetivo-planes")
     @JoinColumn(name = "id_objetivo")
     private Objetivo objetivo;
 

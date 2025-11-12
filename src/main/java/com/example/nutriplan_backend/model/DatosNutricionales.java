@@ -3,6 +3,8 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class DatosNutricionales {
     private Long idDato;
 
     @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
+    @JsonBackReference("usuario-datos")
     @JoinColumn(name= "id_usuario")
     private Usuario usuario;
 
@@ -37,6 +40,7 @@ public class DatosNutricionales {
     private double tmb;
 
     @ManyToOne // Muchos datos nutricionales pueden pertenecer a 1 actividad física
+    @JsonBackReference("actividad-datos")
     @JoinColumn(name="id_actividad")
     private ActividadFisica actividad;
 

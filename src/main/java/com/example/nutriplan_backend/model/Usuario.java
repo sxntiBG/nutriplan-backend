@@ -3,7 +3,7 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,27 +11,32 @@ import java.util.List;
 @Table(name = "usuarios")
 @Data
 @NoArgsConstructor
-
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name = "id_usuario") // Nombre exacto de la columna en BD
+    @Column(name = "id_usuario")
     private Long id;
 
+    @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "correo", unique = true)
+    @Column(unique = true, nullable = false, length = 150)
     private String correo;
 
+    @Column(nullable = false, length = 255)
     private String contrasena;
 
-    // Relación One-To-Many
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    // Relación con DatosNutricionales
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("usuario-datos")
     private List<DatosNutricionales> datosNutricionales = new ArrayList<>();
 
+    // Relación con PlanUsuario
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<PlanUsuario> planUsuario = new ArrayList<>();
+    @JsonManagedReference("usuario-planes")
+    private List<PlanUsuario> planesUsuario = new ArrayList<>();
 }
