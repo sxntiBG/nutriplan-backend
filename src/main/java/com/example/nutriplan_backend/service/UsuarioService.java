@@ -38,13 +38,14 @@ public class UsuarioService {
 
     // PUT
     public Usuario putUsuario(Long id, Usuario detalles){
-        return usuarioRepository.findById(id).map(usuarioExistente ->{
+        return usuarioRepository.findById(id).map(usuarioExistente -> {
             usuarioExistente.setNombre(detalles.getNombre());
             usuarioExistente.setCorreo(detalles.getCorreo());
-            
-            // Si envian nueva contrasña -> cifrarla
-            String contrasenaCifrada = passwordEncoder.encode(detalles.getContrasena());
-            usuarioExistente.setContrasena(contrasenaCifrada);
+
+            if(detalles.getContrasena() != null && !detalles.getContrasena().isEmpty()) {
+                String contrasenaCifrada = passwordEncoder.encode(detalles.getContrasena());
+                usuarioExistente.setContrasena(contrasenaCifrada);
+            }
 
             return usuarioRepository.save(usuarioExistente);
         }).orElseThrow(() -> new ResourceNotFoundException("Error: Usuario con id " + id + " no encontrado."));
