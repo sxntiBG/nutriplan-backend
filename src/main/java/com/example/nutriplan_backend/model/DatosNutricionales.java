@@ -19,6 +19,7 @@ public class DatosNutricionales {
     private Long idDato;
 
     @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
+    @JsonBackReference("usuario-datos")
     @JoinColumn(name= "id_usuario")
     @JsonBackReference
     private Usuario usuario;
@@ -37,6 +38,7 @@ public class DatosNutricionales {
     private double tmb;
 
     @ManyToOne // Muchos datos nutricionales pueden pertenecer a 1 actividad física
+    @JsonBackReference("actividad-datos")
     @JoinColumn(name="id_actividad")
     @JsonIgnoreProperties("datosNutricionales")
     private ActividadFisica actividad;

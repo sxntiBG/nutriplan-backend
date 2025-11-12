@@ -3,7 +3,9 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,9 @@ import java.util.List;
 //@Data
 //@NoArgsConstructor
 public class Objetivo {
-   @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_objetivo")
     private Long id;
 
@@ -30,11 +32,10 @@ public class Objetivo {
     @Column(name = "proteinas_pct")
     private double proteinas;
 
-    @Column(name = "grasas_ptc")
+    @Column(name = "grasas_pct")
     private double grasas;
 
-    //Relación One-To-Many con PlanUsuario
-    @OneToMany(mappedBy = "objetivo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<PlanUsuario> planUsuario = new ArrayList<>();*/
+    @OneToMany(mappedBy = "objetivo")
+    @JsonBackReference("objetivo-planes")
+    private List<PlanUsuario> planesUsuario = new ArrayList<>();
 }
