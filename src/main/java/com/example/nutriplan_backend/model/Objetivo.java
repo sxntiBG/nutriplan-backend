@@ -3,17 +3,15 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "objetivo")
-//@Data
-//@NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class Objetivo {
 
     @Id

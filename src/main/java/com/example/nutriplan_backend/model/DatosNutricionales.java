@@ -21,7 +21,6 @@ public class DatosNutricionales {
     @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
     @JsonBackReference("usuario-datos")
     @JoinColumn(name= "id_usuario")
-    @JsonBackReference
     private Usuario usuario;
 
     @Column(name="peso_kg")

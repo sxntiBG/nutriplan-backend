@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.example.nutriplan_backend.repository.ActividadFisicaRepository;
-import com.example.nutriplan_backend.model.ActividadFisica ;
-import com.example.nutriplan_backend.exception.ResourceNotFoundException;
+import com.example.nutriplan_backend.model.ActividadFisica;
 
 @Service
 public class DatosNutricionalesService {
