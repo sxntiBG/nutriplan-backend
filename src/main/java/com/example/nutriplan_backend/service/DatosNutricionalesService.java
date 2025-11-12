@@ -12,6 +12,7 @@ import com.example.nutriplan_backend.model.ActividadFisica ;
 public class DatosNutricionalesService {
     @Autowired
     private DatosNutricionalesRepository datosNutricionalesRepository;
+    @Autowired
     private ActividadFisicaRepository actividadFisicaRepository;
 
     // POST

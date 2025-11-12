@@ -1,11 +1,18 @@
 package com.example.nutriplan_backend.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonManagedReference; // Para las relaciones
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType; // Para las relaciones
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -22,8 +29,7 @@ public class Usuario {
 
     // Relación One-To-Many
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true) // orphamRemoval para eliminar en cascada
-
     @JsonManagedReference
     private List<DatosNutricionales> datosNutricionales = new ArrayList<>(); // Al ser relación de uno a muchos por eso es una lista
-    private List<PlanUsuario> planUsuario = new ArrayList<>();
+    //private List<PlanUsuario> planUsuario = new ArrayList<>();
 }

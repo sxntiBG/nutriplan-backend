@@ -3,8 +3,10 @@ package com.example.nutriplan_backend.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
+import java.time.LocalDateTime;
 import com.example.nutriplan_backend.model.enums.Genero;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity // Marca la clase como una entidad JPA (mapeada a una tabla)
 @Data // Genera getters, setters, toString, equals y hashCode automáticamente con Lombok
@@ -18,6 +20,7 @@ public class DatosNutricionales {
 
     @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
     @JoinColumn(name= "id_usuario")
+    @JsonBackReference
     private Usuario usuario;
 
     @Column(name="peso_kg")
@@ -35,6 +38,7 @@ public class DatosNutricionales {
 
     @ManyToOne // Muchos datos nutricionales pueden pertenecer a 1 actividad física
     @JoinColumn(name="id_actividad")
+    @JsonIgnoreProperties("datosNutricionales")
     private ActividadFisica actividad;
 
     @Column(name="requerimiento_calorico")
@@ -43,6 +47,6 @@ public class DatosNutricionales {
     private double imc;
 
     @Column(name="fecha_registro")
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
 
 }

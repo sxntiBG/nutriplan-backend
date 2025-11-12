@@ -10,10 +10,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "objetivo")
-@Data
-@NoArgsConstructor
+//@Data
+//@NoArgsConstructor
 public class Objetivo {
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id_objetivo")
@@ -34,7 +34,7 @@ public class Objetivo {
     private double grasas;
 
     // Relación One-To-Many con PlanUsuario
-    @OneToMany(mappedBy = "objetivo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<PlanUsuario> planUsuario = new ArrayList<>();
+    //@OneToMany(mappedBy = "objetivo", cascade = CascadeType.ALL, orphanRemoval = true)
+   // @JsonManagedReference
+    //private List<PlanUsuario> planUsuario = new ArrayList<>();*/
 }
