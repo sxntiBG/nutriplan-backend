@@ -1,22 +1,32 @@
 package com.example.nutriplan_backend.service;
 import com.example.nutriplan_backend.model.DatosNutricionales;
-import com.example.nutriplan_backend.model.enums.Genero;
 import com.example.nutriplan_backend.repository.DatosNutricionalesRepository;
-import com.example.nutriplan_backend.repository.ActividadFisicaRepository;
+import com.example.nutriplan_backend.repository.UsuarioRepository;
 import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
+import com.example.nutriplan_backend.repository.ActividadFisicaRepository;
+import com.example.nutriplan_backend.model.ActividadFisica ;
+import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 
 @Service
 public class DatosNutricionalesService {
     @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
     private DatosNutricionalesRepository datosNutricionalesRepository;
+    @Autowired
     private ActividadFisicaRepository actividadFisicaRepository;
 
     // POST
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
+        Long idUsuario = datosNutricionales.getUsuario().getId();
+        datosNutricionales.setUsuario(
+            usuarioRepository.findById(idUsuario)
+            .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"))
+        );
+
 
         //Se invoca el metodo para calcular la tmb
         double tmbCalculada = calcularTMB(datosNutricionales);
@@ -24,7 +34,7 @@ public class DatosNutricionalesService {
         datosNutricionales.setTmb(tmbCalculada);
 
         //Obtiene el id de la actividad fisica.
-        long idActividad = datosNutricionales.getActividad().getId();
+        Long idActividad = datosNutricionales.getActividad().getId();
         //Invoca el metodo para calcular el requerimiento calorico.
         //Pasa como parametros la tmb y el id de la actividad fisica.
         double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, idActividad);
@@ -107,7 +117,7 @@ public double calcularRequerimientoKcal(double tmb, Long idActividad){
         .orElseThrow(() -> new ResourceNotFoundException("Actividad no encontrada"));
 
 
-    return tmb * actividadFisica.getFactor();
+    return tmb * actividad.getFactor();
 }
 
 //Metodo para calcular el IMC

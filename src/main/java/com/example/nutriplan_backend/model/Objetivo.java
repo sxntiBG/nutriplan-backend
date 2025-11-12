@@ -12,8 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "objetivo")
-@Data
-@NoArgsConstructor
+//@Data
+//@NoArgsConstructor
 public class Objetivo {
 
     @Id
