@@ -19,7 +19,7 @@ public class ActividadFisicaService {
     }
 
     // Obtener por ID
-    public ActividadFisica obtenerPorId(Long id){
+    public ActividadFisica obtenerPorId(Integer id){
         return actividadFisicaRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }

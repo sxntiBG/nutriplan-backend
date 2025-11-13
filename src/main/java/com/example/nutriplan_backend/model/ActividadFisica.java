@@ -17,7 +17,7 @@ public class ActividadFisica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id_actividad")
-    private Long id;
+    private Integer id;
 
     private String nombre;
 
@@ -27,6 +27,6 @@ public class ActividadFisica {
 
     // Relación One-To-Many con DatosNutricionales
     @OneToMany(mappedBy = "actividad", cascade=CascadeType.ALL, orphanRemoval=true)
-    @JsonManagedReference
+    @JsonManagedReference(value="actividad-datos")
     private List<DatosNutricionales> datosNutricionales = new ArrayList<>();
 }

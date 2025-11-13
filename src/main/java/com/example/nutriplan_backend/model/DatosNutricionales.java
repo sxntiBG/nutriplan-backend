@@ -16,11 +16,11 @@ public class DatosNutricionales {
     @Id //Llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
     @Column(name="id_dato") //Nombre exacto de la columna en la BD
-    private Long idDato;
+    private Integer idDato;
 
-    @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
-    @JoinColumn(name= "id_usuario")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER) // Muchos registros nutricionales pertenecen a un usuario
+    @JoinColumn(name= "id_usuario", nullable = false)
+    @JsonBackReference(value="usuario-datos")
     private Usuario usuario;
 
     @Column(name="peso_kg")
@@ -38,7 +38,7 @@ public class DatosNutricionales {
 
     @ManyToOne // Muchos datos nutricionales pueden pertenecer a 1 actividad física
     @JoinColumn(name="id_actividad")
-    @JsonIgnoreProperties("datosNutricionales")
+    @JsonBackReference(value="actividad-datos")
     private ActividadFisica actividad;
 
     @Column(name="requerimiento_calorico")

@@ -1,5 +1,6 @@
 package com.example.nutriplan_backend.service;
 import com.example.nutriplan_backend.model.DatosNutricionales;
+import com.example.nutriplan_backend.model.Usuario;
 import com.example.nutriplan_backend.repository.DatosNutricionalesRepository;
 import com.example.nutriplan_backend.repository.UsuarioRepository;
 import com.example.nutriplan_backend.exception.ResourceNotFoundException;
@@ -13,8 +14,6 @@ import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 @Service
 public class DatosNutricionalesService {
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
     private DatosNutricionalesRepository datosNutricionalesRepository;
     @Autowired
     private ActividadFisicaRepository actividadFisicaRepository;
@@ -22,11 +21,6 @@ public class DatosNutricionalesService {
     // POST
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
         Long idUsuario = datosNutricionales.getUsuario().getId();
-        datosNutricionales.setUsuario(
-            usuarioRepository.findById(idUsuario)
-            .orElseThrow(()-> new ResourceNotFoundException("Usuario no encontrado"))
-        );
-
 
         //Se invoca el metodo para calcular la tmb
         double tmbCalculada = calcularTMB(datosNutricionales);
@@ -34,7 +28,7 @@ public class DatosNutricionalesService {
         datosNutricionales.setTmb(tmbCalculada);
 
         //Obtiene el id de la actividad fisica.
-        Long idActividad = datosNutricionales.getActividad().getId();
+        Integer idActividad = datosNutricionales.getActividad().getId();
         //Invoca el metodo para calcular el requerimiento calorico.
         //Pasa como parametros la tmb y el id de la actividad fisica.
         double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, idActividad);
@@ -55,32 +49,48 @@ public class DatosNutricionalesService {
     }
 
     // GET BY ID
-    public DatosNutricionales obtenerRegistrosPorUsuario(Long id){
+    public DatosNutricionales obtenerRegistrosPorUsuario(Integer id){
         return datosNutricionalesRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }
 
     // PUT
-    public DatosNutricionales actualizarDatos(Long id, DatosNutricionales datoNutricionalNuevo){
+    public DatosNutricionales actualizarDatos(Integer id, DatosNutricionales datoNutricionalNuevo){
+         // Listar todos los registros visibles para JPA
+            List<DatosNutricionales> todos = datosNutricionalesRepository.findAll();
+            System.out.println(">>> Registros existentes en la base:");
+            todos.forEach(d -> System.out.println("ID: " + d.getIdDato() + ", Usuario: " + d.getUsuario().getId()));
            return datosNutricionalesRepository.findById(id).map(datoExistente -> {
 
-        datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
-        datoExistente.setEstaturaM(datoNutricionalNuevo.getEstaturaM());
-        datoExistente.setEdad(datoNutricionalNuevo.getEdad());
-        datoExistente.setGenero(datoNutricionalNuevo.getGenero());
-        datoExistente.setTmb(datoNutricionalNuevo.getTmb());
-        datoExistente.setActividad(datoNutricionalNuevo.getActividad());
-        datoExistente.setRequerimientoCalorico(datoNutricionalNuevo.getRequerimientoCalorico());
-        datoExistente.setImc(datoNutricionalNuevo.getImc());
+             // Mantener el usuario actual
+            Usuario usuarioActual = datoExistente.getUsuario();
+        
+            //Cambiar los demas datos
+            datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
+            datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
+            datoExistente.setEstaturaM(datoNutricionalNuevo.getEstaturaM());
+            datoExistente.setEdad(datoNutricionalNuevo.getEdad());
+            datoExistente.setGenero(datoNutricionalNuevo.getGenero());
+            datoExistente.setTmb(datoNutricionalNuevo.getTmb());
+            datoExistente.setActividad(datoNutricionalNuevo.getActividad());
+            datoExistente.setRequerimientoCalorico(datoNutricionalNuevo.getRequerimientoCalorico());
+            datoExistente.setImc(datoNutricionalNuevo.getImc());
+
+             // Reasignar el usuario para no perderlo
+            datoExistente.setUsuario(usuarioActual);
 
         return datosNutricionalesRepository.save(datoExistente);
 
-    }).orElseThrow(() -> new ResourceNotFoundException(
-            "Error: Registro de datos nutricionales con id " + id + " no encontrado."));
+    }).orElseThrow(() -> {
+        System.out.println(">>> No se encontró registro con id: " + id);
+        return new ResourceNotFoundException(
+            "Error: Registro de datos nutricionales con id " + id + " no encontrado."
+        );
+    });
 }
 
     // DELETE
-    public void eliminarRegistro(Long id){
+    public void eliminarRegistro(Integer id){
         if(!datosNutricionalesRepository.existsById(id)){
             throw new ResourceNotFoundException("Error: Registro no encontrado");
         }
@@ -111,7 +121,7 @@ public class DatosNutricionalesService {
 //Busca el id de actividad fisica seleccionado
 //Si no lo encuentra devuelve error
 //Si existe, obtiene el factor asociado al id y realiza el calculo
-public double calcularRequerimientoKcal(double tmb, Long idActividad){
+public double calcularRequerimientoKcal(double tmb, Integer idActividad){
 
      ActividadFisica actividad = actividadFisicaRepository.findById(idActividad)
         .orElseThrow(() -> new ResourceNotFoundException("Actividad no encontrada"));

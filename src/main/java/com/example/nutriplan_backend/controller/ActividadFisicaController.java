@@ -23,7 +23,7 @@ public class ActividadFisicaController {
 
     // Obtener por ID
     @GetMapping("/{id}")
-    public ResponseEntity<ActividadFisica> obtenerPorId(@PathVariable Long id){
+    public ResponseEntity<ActividadFisica> obtenerPorId(@PathVariable Integer id){
         ActividadFisica consulta = actividadFisicaService.obtenerPorId(id);
         return ResponseEntity.ok(consulta);
     }
