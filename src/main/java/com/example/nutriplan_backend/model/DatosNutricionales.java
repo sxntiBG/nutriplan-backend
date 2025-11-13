@@ -44,6 +44,8 @@ public class DatosNutricionales {
     private double requerimientoCalorico;
 
     private double imc;
+    @Column(name="clasificacion_imc")
+    private String clasificacionImc;
 
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;

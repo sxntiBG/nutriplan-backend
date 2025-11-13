@@ -20,6 +20,7 @@ public class DatosNutricionalesService {
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
         //Se invoca el metodo para calcular la tmb
         double tmbCalculada = calcularTMB(datosNutricionales);
+
         //Reasigna el valor de tmb en la tabla, despues de realizar los calculos.
         datosNutricionales.setTmb(tmbCalculada);
 
@@ -29,6 +30,7 @@ public class DatosNutricionalesService {
         //Invoca el metodo para calcular el requerimiento calorico.
         //Pasa como parametros la tmb y el id de la actividad fisica.
         double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, idActividad);
+
         //Reasigna el valor de la columna requerimiento_calorico en la tabla, despues de realizar los calculos.
         datosNutricionales.setRequerimientoCalorico(rqtoKcalCalculado);
 
@@ -37,11 +39,11 @@ public class DatosNutricionalesService {
         //Reasigna el valor de la columna imc en la tabla, despues de realizar los calculos.
         datosNutricionales.setImc(imcCalculado);
 
+        //Invoca el metodo para clasificar el resultado del imc
         String imcClasificado = clasificarIMC(imcCalculado);
 
-        datosNutricionales.setClasificacionImc
-
-
+        //Reasigna el valor del imc clasificado en el campo de la BD 'clasificacion_imc'
+        datosNutricionales.setClasificacionImc(imcClasificado);
 
         return datosNutricionalesRepository.save(datosNutricionales);
     }
