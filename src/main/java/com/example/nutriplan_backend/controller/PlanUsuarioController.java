@@ -20,7 +20,7 @@ public class PlanUsuarioController {
       Ejemplo de uso desde frontend:
       POST /api/plan/generar?usuarioId=1&objetivoId=2
      */
-    @PostMapping("/generar")
+   @PostMapping("/generar")
     public ResponseEntity<PlanUsuario> generarPlan(
             @RequestParam Long usuarioId,
             @RequestParam Long objetivoId) {
@@ -42,9 +42,10 @@ public class PlanUsuarioController {
     /*
       Elimina un plan por ID
      */
-    @DeleteMapping("/{planId}")
+   @DeleteMapping("/{planId}")
     public ResponseEntity<Void> eliminarPlan(@PathVariable Long planId) {
         planUsuarioService.eliminarPlan(planId);
         return ResponseEntity.noContent().build();
     }
+    
 }

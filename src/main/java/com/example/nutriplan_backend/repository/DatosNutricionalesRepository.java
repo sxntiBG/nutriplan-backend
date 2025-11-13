@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface DatosNutricionalesRepository extends JpaRepository <DatosNutricionales, Long> {
+public interface DatosNutricionalesRepository extends JpaRepository <DatosNutricionales, Integer> {
     
 }

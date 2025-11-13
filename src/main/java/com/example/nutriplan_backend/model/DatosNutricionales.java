@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import com.example.nutriplan_backend.model.enums.Genero;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity // Marca la clase como una entidad JPA (mapeada a una tabla)
 @Data // Genera getters, setters, toString, equals y hashCode automáticamente con Lombok
@@ -16,18 +15,18 @@ public class DatosNutricionales {
     @Id //Llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Autoincremental
     @Column(name="id_dato") //Nombre exacto de la columna en la BD
-    private Long idDato;
+    private Integer idDato;
 
-    @ManyToOne // Muchos registros nutricionales pertenecen a un usuario
-    @JsonBackReference("usuario-datos")
-    @JoinColumn(name= "id_usuario")
+    @ManyToOne(fetch = FetchType.EAGER) // Muchos registros nutricionales pertenecen a un usuario
+    @JoinColumn(name= "id_usuario", nullable = false)
+    @JsonBackReference(value="usuario-datos")
     private Usuario usuario;
 
     @Column(name="peso_kg")
     private double pesoKg;
 
     @Column(name="estatura_m")
-    private double estaturaM;
+    private double estaturaCm;
 
     private int edad;
 
@@ -37,15 +36,16 @@ public class DatosNutricionales {
     private double tmb;
 
     @ManyToOne // Muchos datos nutricionales pueden pertenecer a 1 actividad física
-    @JsonBackReference("actividad-datos")
     @JoinColumn(name="id_actividad")
-    @JsonIgnoreProperties("datosNutricionales")
+    @JsonBackReference(value="actividad-datos")
     private ActividadFisica actividad;
 
     @Column(name="requerimiento_calorico")
     private double requerimientoCalorico;
 
     private double imc;
+    @Column(name="clasificacion_imc")
+    private String clasificacionImc;
 
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;

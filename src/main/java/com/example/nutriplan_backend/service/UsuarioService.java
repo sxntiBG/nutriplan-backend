@@ -34,7 +34,6 @@ public class UsuarioService {
                 .filter(Usuario::isActivo)
                 .toList();
     }
-
     // Obtener usuario por ID
     public Usuario obtenerUsuario(Long id) {
         return usuarioRepository.findById(id)

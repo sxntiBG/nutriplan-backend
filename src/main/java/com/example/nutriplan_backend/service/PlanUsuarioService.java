@@ -113,4 +113,5 @@ public class PlanUsuarioService {
         }
         planUsuarioRepository.deleteById(planId);
     }
+        
 }
