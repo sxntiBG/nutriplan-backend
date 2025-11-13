@@ -2,14 +2,12 @@ package com.example.nutriplan_backend.service;
 import com.example.nutriplan_backend.model.DatosNutricionales;
 import com.example.nutriplan_backend.model.Usuario;
 import com.example.nutriplan_backend.repository.DatosNutricionalesRepository;
-import com.example.nutriplan_backend.repository.UsuarioRepository;
 import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.example.nutriplan_backend.repository.ActividadFisicaRepository;
 import com.example.nutriplan_backend.model.ActividadFisica ;
-import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 
 @Service
 public class DatosNutricionalesService {
@@ -64,7 +62,7 @@ public class DatosNutricionalesService {
             //Cambiar los demas datos
             datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
             datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
-            datoExistente.setEstaturaM(datoNutricionalNuevo.getEstaturaM());
+            datoExistente.setEstaturaCm(datoNutricionalNuevo.getEstaturaCm());
             datoExistente.setEdad(datoNutricionalNuevo.getEdad());
             datoExistente.setGenero(datoNutricionalNuevo.getGenero());
             datoExistente.setTmb(datoNutricionalNuevo.getTmb());
@@ -102,11 +100,11 @@ public class DatosNutricionalesService {
         switch (dn.getGenero()) {
         case M:
         //Formula para el genero masculino
-            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaM()) - (5 * dn.getEdad()) + 5;
+            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaCm()) - (5 * dn.getEdad()) + 5;
 
         case F:
         //Formula para el genero femenino
-            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaM()) - (5 * dn.getEdad()) - 161;
+            return (10 * dn.getPesoKg()) + (6.25 * dn.getEstaturaCm()) - (5 * dn.getEdad()) - 161;
 
         default:
            return 0;
@@ -128,7 +126,7 @@ public double calcularRequerimientoKcal(double tmb, Integer idActividad){
 
 //Metodo para calcular el IMC
 public double calcularIMC(DatosNutricionales dn){
-    return dn.getPesoKg() / (dn.getEstaturaM() * dn.getEstaturaM());
+    return dn.getPesoKg() / (dn.getEstaturaCm() * dn.getEstaturaCm());
 }
 
 }

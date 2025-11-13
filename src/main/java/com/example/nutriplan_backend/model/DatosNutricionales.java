@@ -26,7 +26,7 @@ public class DatosNutricionales {
     private double pesoKg;
 
     @Column(name="estatura_m")
-    private double estaturaM;
+    private double estaturaCm;
 
     private int edad;
 
