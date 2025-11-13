@@ -133,7 +133,8 @@ public double calcularRequerimientoKcal(double tmb, Integer idActividad){
 
 //Metodo para calcular el IMC
 public double calcularIMC(DatosNutricionales dn){
-    return dn.getPesoKg() / (dn.getEstaturaCm() * dn.getEstaturaCm());
+    double estaturaM = dn.getEstaturaCm()/100;
+    return dn.getPesoKg() / (estaturaM * estaturaM);
 }
 
 //Metodo para calcular el IMC
