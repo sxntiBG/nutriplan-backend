@@ -68,20 +68,40 @@ public class DatosNutricionalesService {
         
             //Cambiar los demas datos
             datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
-            datoExistente.setPesoKg(datoNutricionalNuevo.getPesoKg());
             datoExistente.setEstaturaCm(datoNutricionalNuevo.getEstaturaCm());
             datoExistente.setEdad(datoNutricionalNuevo.getEdad());
             datoExistente.setGenero(datoNutricionalNuevo.getGenero());
-            datoExistente.setTmb(datoNutricionalNuevo.getTmb());
+
+            //Se invoca el metodo para recalcular la tmb
+            double tmbCalculada = calcularTMB(datoNutricionalNuevo);
+            datoExistente.setTmb(tmbCalculada);
+
             datoExistente.setActividad(datoNutricionalNuevo.getActividad());
-            datoExistente.setRequerimientoCalorico(datoNutricionalNuevo.getRequerimientoCalorico());
-            datoExistente.setImc(datoNutricionalNuevo.getImc());
+
+            //Obtiene el id de la actividad fisica.
+            Integer idActividad = datoNutricionalNuevo.getActividad().getId();
+            //Invoca el metodo para calcular el requerimiento calorico.
+            //Pasa como parametros la tmb y el id de la actividad fisica.
+
+            double rqtoKcalCalculado = calcularRequerimientoKcal(tmbCalculada, idActividad);
+            //Reasigna el valor de la columna requerimiento_calorico en la tabla, despues de realizar los calculos.
+            datoExistente.setRequerimientoCalorico(rqtoKcalCalculado);
+
+            //Invoca el metodo para recalcular el IMC
+            double imcCalculado = calcularIMC(datoNutricionalNuevo);
+            //Reasigna el valor de la columna imc en la tabla, despues de realizar los calculos.
+            datoExistente.setImc(imcCalculado);
+
+            //Invoca el metodo para clasificar el resultado del imc
+            String imcClasificado = clasificarIMC(imcCalculado);
+
+            //Reasigna el valor del imc clasificado en el campo de la BD 'clasificacion_imc'
+            datoExistente.setClasificacionImc(imcClasificado);
 
              // Reasignar el usuario para no perderlo
             datoExistente.setUsuario(usuarioActual);
 
-        return datosNutricionalesRepository.save(datoExistente);
-
+            return datosNutricionalesRepository.save(datoExistente);
     }).orElseThrow(() -> {
         System.out.println(">>> No se encontró registro con id: " + id);
         return new ResourceNotFoundException(
