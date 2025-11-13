@@ -42,6 +42,8 @@ public class AuthController {
         return ResponseEntity.ok(Map.of(
                 "token", token,
                 "correo", correo,
+                "nombre", usuario.getNombre(),
+                "id", usuario.getId(),
                 "mensaje", "Inicio de sesión exitoso"
         ));
     }
