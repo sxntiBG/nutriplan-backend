@@ -85,8 +85,8 @@ DROP TABLE IF EXISTS `datos_nutricionales_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `datos_nutricionales_usuario` (
-  `id_dato` BIGINT NOT NULL AUTO_INCREMENT,
-  `id_usuario` BIGINT NOT NULL,
+  `id_dato` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
   `peso_kg` decimal(7,2) NOT NULL,
   `estatura_m` decimal(4,2) NOT NULL,
   `edad` int NOT NULL,
@@ -207,7 +207,7 @@ DROP TABLE IF EXISTS `plan_usuario`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plan_usuario` (
   `id_plan_usuario` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` BIGINT NOT NULL,
+  `id_usuario` int NOT NULL,
   `id_objetivo` int DEFAULT NULL,
   `calorias_totales` decimal(9,2) NOT NULL,
   `carbohidratos_g` decimal(9,2) NOT NULL,
@@ -240,7 +240,7 @@ DROP TABLE IF EXISTS `progreso`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `progreso` (
   `id_progreso` int NOT NULL AUTO_INCREMENT,
-  `id_usuario` BIGINT NOT NULL,
+  `id_usuario` int NOT NULL,
   `fecha_registro` date DEFAULT (curdate()),
   `peso_kg` decimal(7,2) DEFAULT NULL,
   `imc` decimal(6,2) DEFAULT NULL,
@@ -268,7 +268,7 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
-  `id_usuario` BIGINT NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `correo` varchar(150) NOT NULL,
   `contrasena` varchar(255) NOT NULL,
