@@ -7,8 +7,8 @@ import com.example.nutriplan_backend.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -16,46 +16,51 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-     @Autowired
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // POST
-    public Usuario postUsuario(Usuario usuario){
-        String contrasenaCifrada = passwordEncoder.encode(usuario.getContrasena());
-        usuario.setContrasena(contrasenaCifrada);
+    // Crear usuario (POST)
+    public Usuario crearUsuario(Usuario usuario) {
+        // Cifrar la contraseña antes de guardar
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        usuario.setActivo(true); // Se asegura que al crear esté activo
         return usuarioRepository.save(usuario);
     }
 
-    // GET ALL
-    public List<Usuario> getUsuarios(){
-        return usuarioRepository.findAll();
+    // Obtener todos los usuarios activos
+    public List<Usuario> obtenerUsuarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .filter(Usuario::isActivo)
+                .toList();
+    }
+    // Obtener usuario por ID
+    public Usuario obtenerUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
     }
 
-    // GET BY ID
-    public Optional<Usuario> getUsuario(Integer id){
-        return usuarioRepository.findById(id);
-    }
+    // Actualizar usuario (PUT)
+    public Usuario actualizarUsuario(Long id, Usuario detalles) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
 
-    // PUT
-    public Usuario putUsuario(Integer id, Usuario detalles){
-        return usuarioRepository.findById(id).map(usuarioExistente ->{
-            usuarioExistente.setNombre(detalles.getNombre());
-            usuarioExistente.setCorreo(detalles.getCorreo());
-            
-            // Si envian nueva contrasña -> cifrarla
-            String contrasenaCifrada = passwordEncoder.encode(detalles.getContrasena());
-            usuarioExistente.setContrasena(contrasenaCifrada);
+        usuarioExistente.setNombre(detalles.getNombre());
+        usuarioExistente.setCorreo(detalles.getCorreo());
 
-            return usuarioRepository.save(usuarioExistente);
-        }).orElseThrow(() -> new ResourceNotFoundException("Error: Usuario con id " + id + " no encontrado."));
-    }
-
-    // DELETE
-    public void deleteUsuario(Integer id){
-        if(!usuarioRepository.existsById(id)){
-            throw new ResourceNotFoundException("Error: Usuario con id " + id + " no encontrado.");
+        if (detalles.getContrasena() != null && !detalles.getContrasena().isBlank()) {
+            usuarioExistente.setContrasena(passwordEncoder.encode(detalles.getContrasena()));
         }
 
-        usuarioRepository.deleteById(id);
+        return usuarioRepository.save(usuarioExistente);
+    }
+
+    // Desactivar usuario (DELETE lógico)
+    public void desactivarUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
+
+        usuario.setActivo(false);
+        usuarioRepository.save(usuario);
     }
 }
