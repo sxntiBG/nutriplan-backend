@@ -63,4 +63,8 @@ public class UsuarioService {
         usuario.setActivo(false);
         usuarioRepository.save(usuario);
     }
+
+    public boolean existeCorreo(String correo) {
+        return usuarioRepository.existsByCorreo(correo);
+    }
 }

@@ -5,7 +5,9 @@ import com.example.nutriplan_backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import java.util.Map;
 
 import java.util.List;
 
@@ -18,10 +20,26 @@ public class UsuarioController {
 
     // Crear un nuevo usuario
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
+        // 🔹 Verificar si el correo ya existe
+        boolean existeCorreo = usuarioService.existeCorreo(usuario.getCorreo());
+        if (existeCorreo) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "El correo ya está registrado."));
+        }
+
+        // 🔹 Crear el nuevo usuario
         Usuario nuevoUsuario = usuarioService.crearUsuario(usuario);
         return ResponseEntity.ok(nuevoUsuario);
     }
+
+    @GetMapping("/existe/{correo}")
+    public ResponseEntity<Boolean> existeCorreo(@PathVariable String correo) {
+        boolean existe = usuarioService.existeCorreo(correo);
+        return ResponseEntity.ok(existe);
+    }
+
 
     // Obtener todos los usuarios activos
     @GetMapping
