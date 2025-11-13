@@ -2,10 +2,10 @@ package com.example.nutriplan_backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType; // Para las relaciones
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,14 +15,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "usuarios")
 @Data
 @NoArgsConstructor
 
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_usuario")
+    private Integer id;
 
-    private Long id;
     private String nombre;
     private String correo;
     private String contrasena;

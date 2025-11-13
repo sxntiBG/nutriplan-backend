@@ -32,12 +32,12 @@ public class UsuarioService {
     }
 
     // GET BY ID
-    public Optional<Usuario> getUsuario(Long id){
+    public Optional<Usuario> getUsuario(Integer id){
         return usuarioRepository.findById(id);
     }
 
     // PUT
-    public Usuario putUsuario(Long id, Usuario detalles){
+    public Usuario putUsuario(Integer id, Usuario detalles){
         return usuarioRepository.findById(id).map(usuarioExistente ->{
             usuarioExistente.setNombre(detalles.getNombre());
             usuarioExistente.setCorreo(detalles.getCorreo());
@@ -51,7 +51,7 @@ public class UsuarioService {
     }
 
     // DELETE
-    public void deleteUsuario(Long id){
+    public void deleteUsuario(Integer id){
         if(!usuarioRepository.existsById(id)){
             throw new ResourceNotFoundException("Error: Usuario con id " + id + " no encontrado.");
         }

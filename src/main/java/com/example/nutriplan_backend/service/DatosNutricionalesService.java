@@ -20,7 +20,7 @@ public class DatosNutricionalesService {
 
     // POST
     public DatosNutricionales crearDatosNutricionales(DatosNutricionales datosNutricionales){
-        Long idUsuario = datosNutricionales.getUsuario().getId();
+        Integer idUsuario = datosNutricionales.getUsuario().getId();
 
         //Se invoca el metodo para calcular la tmb
         double tmbCalculada = calcularTMB(datosNutricionales);
@@ -56,10 +56,6 @@ public class DatosNutricionalesService {
 
     // PUT
     public DatosNutricionales actualizarDatos(Integer id, DatosNutricionales datoNutricionalNuevo){
-         // Listar todos los registros visibles para JPA
-            List<DatosNutricionales> todos = datosNutricionalesRepository.findAll();
-            System.out.println(">>> Registros existentes en la base:");
-            todos.forEach(d -> System.out.println("ID: " + d.getIdDato() + ", Usuario: " + d.getUsuario().getId()));
            return datosNutricionalesRepository.findById(id).map(datoExistente -> {
 
              // Mantener el usuario actual

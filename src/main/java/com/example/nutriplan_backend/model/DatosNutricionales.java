@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import com.example.nutriplan_backend.model.enums.Genero;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity // Marca la clase como una entidad JPA (mapeada a una tabla)
 @Data // Genera getters, setters, toString, equals y hashCode automáticamente con Lombok
