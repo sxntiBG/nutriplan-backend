@@ -18,12 +18,12 @@ public class PlanUsuarioController {
     /*
       Genera y guarda un plan nutricional nuevo para el usuario.
       Ejemplo de uso desde frontend:
-      POST /api/plan/generar?usuarioId=1&objetivoId=2
+      POST /api/plan-usuario/generar?usuarioId=1&objetivoId=2
      */
    @PostMapping("/generar")
     public ResponseEntity<PlanUsuario> generarPlan(
-            @RequestParam Long usuarioId,
-            @RequestParam Long objetivoId) {
+            @RequestParam Integer usuarioId,
+            @RequestParam Integer objetivoId) {
 
         PlanUsuario plan = planUsuarioService.generarYGuardarPlan(usuarioId, objetivoId);
         return ResponseEntity.ok(plan);
@@ -34,7 +34,7 @@ public class PlanUsuarioController {
       GET /api/plan/usuario/1
      */
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<PlanUsuario>> obtenerPlanesPorUsuario(@PathVariable Long usuarioId) {
+    public ResponseEntity<List<PlanUsuario>> obtenerPlanesPorUsuario(@PathVariable Integer usuarioId) {
         List<PlanUsuario> planes = planUsuarioService.obtenerPlanesPorUsuario(usuarioId);
         return ResponseEntity.ok(planes);
     }
@@ -43,7 +43,7 @@ public class PlanUsuarioController {
       Elimina un plan por ID
      */
    @DeleteMapping("/{planId}")
-    public ResponseEntity<Void> eliminarPlan(@PathVariable Long planId) {
+    public ResponseEntity<Void> eliminarPlan(@PathVariable Integer planId) {
         planUsuarioService.eliminarPlan(planId);
         return ResponseEntity.noContent().build();
     }

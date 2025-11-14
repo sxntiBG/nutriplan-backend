@@ -16,7 +16,7 @@ public class GrupoAlimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo")
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombre_grupo")
     private String nombre;

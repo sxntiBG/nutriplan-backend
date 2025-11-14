@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class PlanUsuarioService {
@@ -23,15 +20,13 @@ public class PlanUsuarioService {
     @Autowired
     private DatosNutricionalesRepository datosNutricionalesRepository;
     @Autowired
-    private ActividadFisicaRepository actividadFisicaRepository;
-    @Autowired
     private ObjetivoRepository objetivoRepository;
     @Autowired
     private PlanUsuarioRepository planUsuarioRepository;
 
     // POST
     @Transactional
-    public PlanUsuario generarYGuardarPlan(Long usuarioId, Long objetivoId) {
+    public PlanUsuario generarYGuardarPlan(Integer usuarioId, Integer objetivoId) {
 
         // Obtiene el ID del Usuario.
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -68,7 +63,7 @@ public class PlanUsuarioService {
     }
 
     // ✅ NUEVO: calcula sin guardar
-    public Map<String, Object> calcularPlanPrevio(Long usuarioId, Long objetivoId) {
+    /*public Map<String, Object> calcularPlanPrevio(Integer usuarioId, Integer objetivoId) {
         DatosNutricionales datos = datosNutricionalesRepository.findByUsuarioId(usuarioId)
                 .orElseThrow(() -> new ResourceNotFoundException("Datos nutricionales no encontrados"));
 
@@ -101,13 +96,13 @@ public class PlanUsuarioService {
         resultado.put("grasasG", grasasG);
 
         return resultado;
-    }
+    }*/
 
-    public List<PlanUsuario> obtenerPlanesPorUsuario(Long usuarioId) {
+    public List<PlanUsuario> obtenerPlanesPorUsuario(Integer usuarioId) {
         return planUsuarioRepository.findByUsuarioId(usuarioId);
     }
 
-    public void eliminarPlan(Long planId) {
+    public void eliminarPlan(Integer planId) {
         if (!planUsuarioRepository.existsById(planId)) {
             throw new ResourceNotFoundException("Plan no encontrado con ID: " + planId);
         }

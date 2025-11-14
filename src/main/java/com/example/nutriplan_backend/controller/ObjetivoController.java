@@ -23,7 +23,7 @@ public class ObjetivoController {
 
     // Obtener por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Objetivo> obtenerPorId(@PathVariable Long id){
+    public ResponseEntity<Objetivo> obtenerPorId(@PathVariable Integer id){
         Objetivo consulta = objetivoService.obtenerPorId(id);
         return ResponseEntity.ok(consulta);
     }

@@ -3,7 +3,6 @@ package com.example.nutriplan_backend.controller;
 import com.example.nutriplan_backend.model.DatosNutricionales;
 import com.example.nutriplan_backend.service.DatosNutricionalesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;

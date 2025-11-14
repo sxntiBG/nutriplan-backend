@@ -20,7 +20,7 @@ public class AlimentoService {
     }
 
     // Obtener por ID
-    public Alimento obtenerPorId(Long id) {
+    public Alimento obtenerPorId(Integer id) {
         return alimentoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }

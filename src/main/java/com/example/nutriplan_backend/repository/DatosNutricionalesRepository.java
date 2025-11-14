@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 
 public interface DatosNutricionalesRepository extends JpaRepository <DatosNutricionales, Integer> {
-    Optional<DatosNutricionales> findByUsuarioId(Long usuarioId);
+    Optional<DatosNutricionales> findByUsuarioId(Integer usuarioId);
 }

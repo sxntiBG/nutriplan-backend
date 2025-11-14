@@ -20,7 +20,7 @@ public class MacroClasificacionService {
     }
 
     // Obtener por ID
-    public MacroClasificacion obtenerPorId(Long id) {
+    public MacroClasificacion obtenerPorId(Integer id) {
         return macroClasificacionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }
