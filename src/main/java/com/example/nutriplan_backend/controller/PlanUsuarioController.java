@@ -1,11 +1,13 @@
 package com.example.nutriplan_backend.controller;
 
+import com.example.nutriplan_backend.model.DatosNutricionales;
 import com.example.nutriplan_backend.model.PlanUsuario;
 import com.example.nutriplan_backend.service.PlanUsuarioService;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +23,11 @@ public class PlanUsuarioController {
       POST /api/plan-usuario/generar?usuarioId=1&objetivoId=2
      */
    @PostMapping("/generar")
-    public ResponseEntity<PlanUsuario> generarPlan(
-            @RequestParam Integer usuarioId,
-            @RequestParam Integer objetivoId) {
-
-        PlanUsuario plan = planUsuarioService.generarYGuardarPlan(usuarioId, objetivoId);
+    public ResponseEntity<PlanUsuario> generarPlan(@RequestBody PlanUsuario planUsuario) {
+        PlanUsuario plan = planUsuarioService.generarYGuardarPlan(planUsuario);
         return ResponseEntity.ok(plan);
     }
-
+    
     /*
       Obtiene todos los planes de un usuario
       GET /api/plan/usuario/1
