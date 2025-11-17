@@ -20,7 +20,7 @@ public class GrupoAlimentoService {
     }
 
     // Obtener por ID
-    public GrupoAlimento obtenerPorId(Long id) {
+    public GrupoAlimento obtenerPorId(Integer id) {
         return grupoAlimentoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }

@@ -15,7 +15,7 @@ public class MacroClasificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_macro")
-    private Long id;
+    private Integer id;
 
     @Column(name = "nombre_macro")
     private String nombre;

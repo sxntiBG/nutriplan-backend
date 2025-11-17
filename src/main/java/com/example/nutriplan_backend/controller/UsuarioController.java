@@ -50,21 +50,21 @@ public class UsuarioController {
 
     // Obtener usuario por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable Long id) {
+    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable Integer id) {
         Usuario usuario = usuarioService.obtenerUsuario(id);
         return ResponseEntity.ok(usuario);
     }
 
     // Actualizar usuario
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario detalles) {
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario detalles) {
         Usuario usuarioActualizado = usuarioService.actualizarUsuario(id, detalles);
         return ResponseEntity.ok(usuarioActualizado);
     }
 
     // Desactivar usuario (eliminación lógica)
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> desactivarUsuario(@PathVariable Long id) {
+    public ResponseEntity<String> desactivarUsuario(@PathVariable Integer id) {
         usuarioService.desactivarUsuario(id);
         return ResponseEntity.ok("Usuario con ID " + id + " desactivado correctamente.");
     }

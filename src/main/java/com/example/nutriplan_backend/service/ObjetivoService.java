@@ -19,7 +19,7 @@ public class ObjetivoService {
     }
 
     // Obtener por ID
-    public Objetivo obtenerPorId(Long id){
+    public Objetivo obtenerPorId(Integer id){
         return objetivoRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
     }

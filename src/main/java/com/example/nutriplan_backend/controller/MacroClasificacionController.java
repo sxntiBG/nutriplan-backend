@@ -24,7 +24,7 @@ public class MacroClasificacionController {
 
     // Obtener por ID
     @GetMapping("/{id}")
-    public ResponseEntity<MacroClasificacion> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<MacroClasificacion> obtenerPorId(@PathVariable Integer id) {
         MacroClasificacion consulta = macroClasificacionService.obtenerPorId(id);
         return ResponseEntity.ok(consulta);
     }

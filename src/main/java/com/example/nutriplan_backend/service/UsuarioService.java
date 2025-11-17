@@ -35,13 +35,13 @@ public class UsuarioService {
                 .toList();
     }
     // Obtener usuario por ID
-    public Usuario obtenerUsuario(Long id) {
+    public Usuario obtenerUsuario(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
     }
 
     // Actualizar usuario (PUT)
-    public Usuario actualizarUsuario(Long id, Usuario detalles) {
+    public Usuario actualizarUsuario(Integer id, Usuario detalles) {
         Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
 
@@ -56,7 +56,7 @@ public class UsuarioService {
     }
 
     // Desactivar usuario (DELETE lógico)
-    public void desactivarUsuario(Long id) {
+    public void desactivarUsuario(Integer id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario con ID " + id + " no encontrado."));
 

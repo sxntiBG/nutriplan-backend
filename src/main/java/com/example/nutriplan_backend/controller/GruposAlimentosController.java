@@ -24,7 +24,7 @@ public class GruposAlimentosController {
 
     // Obtener por ID
     @GetMapping("/{id}")
-    public ResponseEntity<GrupoAlimento> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<GrupoAlimento> obtenerPorId(@PathVariable Integer id) {
         GrupoAlimento consulta = gruposAlimentosService.obtenerPorId(id);
         return ResponseEntity.ok(consulta);
     }
